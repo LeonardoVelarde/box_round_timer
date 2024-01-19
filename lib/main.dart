@@ -55,19 +55,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _roundLengthinSec = 90;
+  int _roundLengthInSec = 90;
   int _roundCounter = 3;
   int _restTimeinSec = 30;
   int _preparationTimeinSec = 0;
   int _soundIntervalTimeinSec = 10;
-
-  void _incrementCounter() {
+  void _incrementRoundTimeBy30sec() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+        _roundLengthInSec += 30;
     });
   }
 
