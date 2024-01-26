@@ -60,10 +60,35 @@ class _MyHomePageState extends State<MyHomePage> {
   int _restTimeinSec = 30;
   int _preparationTimeinSec = 0;
   int _soundIntervalTimeinSec = 10;
-  void _incrementRoundTimeBy30sec() {
+
+  void _changeRoundTimerValue(int value) {
     setState(() {
-        _roundLengthInSec += 30;
+      _roundLengthInSec += value;
     });
+  }
+
+  void _changeRestTimerValue(int value) {
+    setState(() {
+      _restTimeinSec += value;
+    });
+  }
+
+  void _addRoundCounter(int value) {
+    setState(() {
+      _roundCounter += value;
+    });
+  }
+
+  String _getFormattedMinutesFromSeconds(int seconds) {
+    return '0${seconds ~/ 60}';
+  }
+
+  String _getFormattedSecondsFromSeconds(int seconds) {
+    if (seconds % 60 < 10) {
+      return '0${seconds % 60}';
+    } else {
+      return '${seconds % 60}';
+    }
   }
 
   @override
@@ -85,20 +110,30 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 children: <Widget>[
                   const Spacer(),
-                  const Text('01:30',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 60)),
+                  Column(
+                    children: [
+                      Text(
+                          '${_getFormattedMinutesFromSeconds(_roundLengthInSec)}:${_getFormattedSecondsFromSeconds(_roundLengthInSec)}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 60)),
+                      const Text('Round Length'),
+                    ],
+                  ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 30s',
-                    onPressed: () {},
+                    tooltip: 'Aumentar tiempo por 10s',
+                    onPressed: () {
+                      _changeRoundTimerValue(10);
+                    },
                   ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 30s',
-                    onPressed: () {},
+                    tooltip: 'Reducir tiempo por 10s',
+                    onPressed: () {
+                      _changeRoundTimerValue(-10);
+                    },
                   ),
                   const Spacer(),
                   const Text.rich(
@@ -115,26 +150,36 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 children: <Widget>[
                   const Spacer(),
-                  const Text('01:30',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 60)),
+                  Column(
+                    children: [
+                      Text(
+                          '${_getFormattedMinutesFromSeconds(_restTimeinSec)}:${_getFormattedSecondsFromSeconds(_restTimeinSec)}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 60)),
+                      const Text('Rest Time'),
+                    ],
+                  ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 30s',
-                    onPressed: () {},
+                    tooltip: 'Aumentar tiempo por 10s',
+                    onPressed: () {
+                      _changeRestTimerValue(10);
+                    },
                   ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 30s',
-                    onPressed: () {},
+                    tooltip: 'Reducir tiempo por 10s',
+                    onPressed: () {
+                      _changeRestTimerValue(-10);
+                    },
                   ),
                   const Spacer(),
                   const Text.rich(
                     TextSpan(
                       children: [
-                        WidgetSpan(child: Icon(Icons.timer)),
+                        WidgetSpan(child: Icon(Icons.snooze)),
                       ],
                     ),
                   ),
@@ -145,26 +190,35 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 children: <Widget>[
                   const Spacer(),
-                  const Text('01:30',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 60)),
+                  Column(
+                    children: [
+                      Text('$_roundCounter',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 60)),
+                      const Text('Rounds'),
+                    ],
+                  ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 30s',
-                    onPressed: () {},
+                    tooltip: 'Aumentar una ronda',
+                    onPressed: () {
+                      _addRoundCounter(1);
+                    },
                   ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 30s',
-                    onPressed: () {},
+                    tooltip: 'Reducir una ronda',
+                    onPressed: () {
+                      _addRoundCounter(-1);
+                    },
                   ),
                   const Spacer(),
                   const Text.rich(
                     TextSpan(
                       children: [
-                        WidgetSpan(child: Icon(Icons.timer)),
+                        WidgetSpan(child: Icon(Icons.doorbell_outlined)),
                       ],
                     ),
                   ),
