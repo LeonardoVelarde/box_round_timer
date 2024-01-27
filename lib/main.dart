@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,21 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Round Timer',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -38,15 +25,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -62,20 +40,47 @@ class _MyHomePageState extends State<MyHomePage> {
   int _soundIntervalTimeinSec = 10;
 
   void _changeRoundTimerValue(int value) {
+    if (_roundLengthInSec + value <= 0) {
+      return;
+    }
     setState(() {
       _roundLengthInSec += value;
     });
   }
 
   void _changeRestTimerValue(int value) {
+    if (_restTimeinSec + value <= 0) {
+      return;
+    }
     setState(() {
       _restTimeinSec += value;
     });
   }
 
-  void _addRoundCounter(int value) {
+  void _changeRoundCounter(int value) {
+    if (_roundCounter + value <= 0) {
+      return;
+    }
     setState(() {
       _roundCounter += value;
+    });
+  }
+
+  void _changePreparationTime(int value) {
+    if (_preparationTimeinSec + value <= 0) {
+      return;
+    }
+    setState(() {
+      _preparationTimeinSec += value;
+    });
+  }
+
+  void _changeSoundIntervalTime(int value) {
+    if (_soundIntervalTimeinSec + value <= 0) {
+      return;
+    }
+    setState(() {
+      _soundIntervalTimeinSec += value;
     });
   }
 
@@ -139,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Text.rich(
                     TextSpan(
                       children: [
-                        WidgetSpan(child: Icon(Icons.timer)),
+                        WidgetSpan(child: Icon(Icons.timer_outlined)),
                       ],
                     ),
                   ),
@@ -192,18 +197,102 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Spacer(),
                   Column(
                     children: [
+                      Text(
+                          '${_getFormattedMinutesFromSeconds(_preparationTimeinSec)}:${_getFormattedSecondsFromSeconds(_preparationTimeinSec)}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 60)),
+                      const Text('Preparation Time'),
+                    ],
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    tooltip: 'Aumentar tiempo por 10s',
+                    onPressed: () {
+                      _changePreparationTime(10);
+                    },
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    tooltip: 'Reducir tiempo por 10s',
+                    onPressed: () {
+                      _changePreparationTime(-10);
+                    },
+                  ),
+                  const Spacer(),
+                  const Text.rich(
+                    TextSpan(
+                      children: [
+                        WidgetSpan(child: Icon(Icons.tune)),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: <Widget>[
+                  const Spacer(),
+                  Column(
+                    children: [
+                      Text(
+                          '${_getFormattedMinutesFromSeconds(_soundIntervalTimeinSec)}:${_getFormattedSecondsFromSeconds(_soundIntervalTimeinSec)}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 60)),
+                      const Text('Secondary bell inverval'),
+                    ],
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    tooltip: 'Aumentar tiempo por 10s',
+                    onPressed: () {
+                      _changeSoundIntervalTime(10);
+                    },
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    tooltip: 'Reducir tiempo por 10s',
+                    onPressed: () {
+                      _changeSoundIntervalTime(-10);
+                    },
+                  ),
+                  const Spacer(),
+                  const Text.rich(
+                    TextSpan(
+                      children: [
+                        WidgetSpan(child: Icon(Icons.hearing)),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: <Widget>[
+                  const Spacer(
+                    flex: 3,
+                  ),
+                  Column(
+                    children: [
                       Text('$_roundCounter',
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 60)),
                       const Text('Rounds'),
                     ],
                   ),
-                  const Spacer(),
+                  const Spacer(
+                    flex: 3,
+                  ),
                   IconButton(
                     icon: const Icon(Icons.add),
                     tooltip: 'Aumentar una ronda',
                     onPressed: () {
-                      _addRoundCounter(1);
+                      _changeRoundCounter(1);
                     },
                   ),
                   const Spacer(),
@@ -211,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: const Icon(Icons.remove),
                     tooltip: 'Reducir una ronda',
                     onPressed: () {
-                      _addRoundCounter(-1);
+                      _changeRoundCounter(-1);
                     },
                   ),
                   const Spacer(),
@@ -225,66 +314,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Spacer(),
                 ],
               ),
-              const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  const Spacer(),
-                  const Text('01:30',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 60)),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 30s',
-                    onPressed: () {},
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 30s',
-                    onPressed: () {},
-                  ),
-                  const Spacer(),
-                  const Text.rich(
-                    TextSpan(
-                      children: [
-                        WidgetSpan(child: Icon(Icons.timer)),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
+              const Spacer(),
+              ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // go to timer page
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        elevation: 12.0,
+                        textStyle: const TextStyle(color: Colors.white)),
+                    child: const Text('Start'),
+                  )
                 ],
               ),
-              const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  const Spacer(),
-                  const Text('01:30',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 60)),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 30s',
-                    onPressed: () {},
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 30s',
-                    onPressed: () {},
-                  ),
-                  const Spacer(),
-                  const Text.rich(
-                    TextSpan(
-                      children: [
-                        WidgetSpan(child: Icon(Icons.timer)),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                ],
-              ),
+              const Spacer(),
             ],
           ),
         ),
