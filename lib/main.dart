@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'src/components/timer_input.dart';
 
 void main() {
   runApp(const MyApp());
@@ -107,9 +108,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Align(
           alignment: Alignment.topCenter,
           child: Column(
-            // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-            // action in the IDE, or press "p" in the console), to see the
-            // wireframe for each widget.
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Row(
@@ -326,11 +324,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         backgroundColor: Colors.green,
                         elevation: 12.0,
                         textStyle: const TextStyle(color: Colors.white)),
-                    child: const Text('Start'),
+                    child: const Text(
+                      'Start',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   )
                 ],
               ),
               const Spacer(),
+              TimerInput(
+                valueInSeconds: _roundLengthInSec,
+                label: 'Round Length',
+                increaseValueTooltip: 'Aumentar tiempo por 10s',
+                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                icon: const Icon(Icons.timer_outlined),
+                onValueChanged: (value) {
+                  setState(() {
+                    _roundLengthInSec = value;
+                  });
+                },
+              ),
             ],
           ),
         ),
