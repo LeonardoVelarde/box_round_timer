@@ -6,7 +6,7 @@ class TimerInput extends StatefulWidget {
   final String label;
   final String increaseValueTooltip;
   final String decreaseValueTooltip;
-  final Icon icon;
+  final IconData icon;
 
   const TimerInput({
     required this.valueInSeconds,
@@ -23,6 +23,23 @@ class TimerInput extends StatefulWidget {
 
 class _TimerInputState extends State<TimerInput> {
   int _roundLengthInSec = 0;
+
+  void _changeRoundTimerValue(int seconds) {
+    if (_roundLengthInSec + seconds < 0) return;
+    setState(() {
+      _roundLengthInSec += seconds;
+    });
+    widget.onValueChanged(_roundLengthInSec);
+  }
+
+  String _getFormattedMinutesFromSeconds(int seconds) {
+    if (seconds < 60) return '00';
+    return (seconds / 60).floor().toString().padLeft(2, '0');
+  }
+
+  String _getFormattedSecondsFromSeconds(int seconds) {
+    return (seconds % 60).toString().padLeft(2, '0');
+  }
 
   @override
   void initState() {
@@ -61,32 +78,15 @@ class _TimerInputState extends State<TimerInput> {
           },
         ),
         const Spacer(),
-        const Text.rich(
+        Text.rich(
           TextSpan(
             children: [
-              WidgetSpan(child: Icon(Icons.timer_outlined)),
+              WidgetSpan(child: Icon(widget.icon)),
             ],
           ),
         ),
         const Spacer(),
       ],
     );
-  }
-
-  void _changeRoundTimerValue(int seconds) {
-    if (_roundLengthInSec + seconds < 0) return;
-    setState(() {
-      _roundLengthInSec += seconds;
-    });
-    widget.onValueChanged(_roundLengthInSec);
-  }
-
-  String _getFormattedMinutesFromSeconds(int seconds) {
-    if (seconds < 60) return '00';
-    return (seconds / 60).floor().toString().padLeft(2, '0');
-  }
-
-  String _getFormattedSecondsFromSeconds(int seconds) {
-    return (seconds % 60).toString().padLeft(2, '0');
   }
 }

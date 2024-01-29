@@ -19,15 +19,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'msheee'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -110,164 +108,56 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Text(
-                          '${_getFormattedMinutesFromSeconds(_roundLengthInSec)}:${_getFormattedSecondsFromSeconds(_roundLengthInSec)}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 60)),
-                      const Text('Round Length'),
-                    ],
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 10s',
-                    onPressed: () {
-                      _changeRoundTimerValue(10);
-                    },
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 10s',
-                    onPressed: () {
-                      _changeRoundTimerValue(-10);
-                    },
-                  ),
-                  const Spacer(),
-                  const Text.rich(
-                    TextSpan(
-                      children: [
-                        WidgetSpan(child: Icon(Icons.timer_outlined)),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                ],
+              TimerInput(
+                valueInSeconds: _roundLengthInSec,
+                label: 'Round Length',
+                increaseValueTooltip: 'Aumentar tiempo por 10s',
+                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                icon: Icons.timer_outlined,
+                onValueChanged: (value) {
+                  setState(() {
+                    _roundLengthInSec = value;
+                  });
+                },
               ),
               const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Text(
-                          '${_getFormattedMinutesFromSeconds(_restTimeinSec)}:${_getFormattedSecondsFromSeconds(_restTimeinSec)}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 60)),
-                      const Text('Rest Time'),
-                    ],
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 10s',
-                    onPressed: () {
-                      _changeRestTimerValue(10);
-                    },
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 10s',
-                    onPressed: () {
-                      _changeRestTimerValue(-10);
-                    },
-                  ),
-                  const Spacer(),
-                  const Text.rich(
-                    TextSpan(
-                      children: [
-                        WidgetSpan(child: Icon(Icons.snooze)),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                ],
+              TimerInput(
+                valueInSeconds: _restTimeinSec,
+                label: 'Rest time',
+                increaseValueTooltip: 'Aumentar tiempo por 10s',
+                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                icon: Icons.snooze,
+                onValueChanged: (value) {
+                  setState(() {
+                    _restTimeinSec = value;
+                  });
+                },
               ),
               const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Text(
-                          '${_getFormattedMinutesFromSeconds(_preparationTimeinSec)}:${_getFormattedSecondsFromSeconds(_preparationTimeinSec)}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 60)),
-                      const Text('Preparation Time'),
-                    ],
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 10s',
-                    onPressed: () {
-                      _changePreparationTime(10);
-                    },
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 10s',
-                    onPressed: () {
-                      _changePreparationTime(-10);
-                    },
-                  ),
-                  const Spacer(),
-                  const Text.rich(
-                    TextSpan(
-                      children: [
-                        WidgetSpan(child: Icon(Icons.tune)),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                ],
+              TimerInput(
+                valueInSeconds: _preparationTimeinSec,
+                label: 'Preparation time',
+                increaseValueTooltip: 'Aumentar tiempo por 10s',
+                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                icon: Icons.tune,
+                onValueChanged: (value) {
+                  setState(() {
+                    _preparationTimeinSec = value;
+                  });
+                },
               ),
               const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Text(
-                          '${_getFormattedMinutesFromSeconds(_soundIntervalTimeinSec)}:${_getFormattedSecondsFromSeconds(_soundIntervalTimeinSec)}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 60)),
-                      const Text('Secondary bell inverval'),
-                    ],
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    tooltip: 'Aumentar tiempo por 10s',
-                    onPressed: () {
-                      _changeSoundIntervalTime(10);
-                    },
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    tooltip: 'Reducir tiempo por 10s',
-                    onPressed: () {
-                      _changeSoundIntervalTime(-10);
-                    },
-                  ),
-                  const Spacer(),
-                  const Text.rich(
-                    TextSpan(
-                      children: [
-                        WidgetSpan(child: Icon(Icons.hearing)),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                ],
+              TimerInput(
+                valueInSeconds: _soundIntervalTimeinSec,
+                label: 'Secondary Bell',
+                increaseValueTooltip: 'Aumentar tiempo por 10s',
+                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                icon: Icons.hearing,
+                onValueChanged: (value) {
+                  setState(() {
+                    _soundIntervalTimeinSec = value;
+                  });
+                },
               ),
               const SizedBox(height: 10),
               Row(
@@ -332,18 +222,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               const Spacer(),
-              TimerInput(
-                valueInSeconds: _roundLengthInSec,
-                label: 'Round Length',
-                increaseValueTooltip: 'Aumentar tiempo por 10s',
-                decreaseValueTooltip: 'Reducir tiempo por 10s',
-                icon: const Icon(Icons.timer_outlined),
-                onValueChanged: (value) {
-                  setState(() {
-                    _roundLengthInSec = value;
-                  });
-                },
-              ),
             ],
           ),
         ),
