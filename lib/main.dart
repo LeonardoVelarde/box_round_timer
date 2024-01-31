@@ -1,5 +1,7 @@
+// ignore: unused_import
 import 'dart:developer' as developer;
 
+import 'package:boxing_round_timer/src/screens/round_timer.dart';
 import 'package:flutter/material.dart';
 import 'src/components/timer_input.dart';
 
@@ -38,24 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _preparationTimeinSec = 0;
   int _soundIntervalTimeinSec = 10;
 
-  void _changeRoundTimerValue(int value) {
-    if (_roundLengthInSec + value <= 0) {
-      return;
-    }
-    setState(() {
-      _roundLengthInSec += value;
-    });
-  }
-
-  void _changeRestTimerValue(int value) {
-    if (_restTimeinSec + value <= 0) {
-      return;
-    }
-    setState(() {
-      _restTimeinSec += value;
-    });
-  }
-
   void _changeRoundCounter(int value) {
     if (_roundCounter + value <= 0) {
       return;
@@ -63,36 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _roundCounter += value;
     });
-  }
-
-  void _changePreparationTime(int value) {
-    if (_preparationTimeinSec + value <= 0) {
-      return;
-    }
-    setState(() {
-      _preparationTimeinSec += value;
-    });
-  }
-
-  void _changeSoundIntervalTime(int value) {
-    if (_soundIntervalTimeinSec + value <= 0) {
-      return;
-    }
-    setState(() {
-      _soundIntervalTimeinSec += value;
-    });
-  }
-
-  String _getFormattedMinutesFromSeconds(int seconds) {
-    return '0${seconds ~/ 60}';
-  }
-
-  String _getFormattedSecondsFromSeconds(int seconds) {
-    if (seconds % 60 < 10) {
-      return '0${seconds % 60}';
-    } else {
-      return '${seconds % 60}';
-    }
   }
 
   @override
@@ -208,7 +162,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // go to timer page
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          // builder: (context) => RoundTimer(roundSeconds: _roundLengthInSec, roundCounter: _roundCounter, restSeconds: _restTimeinSec, preparationSeconds: _preparationTimeinSec, soundIntervalSeconds: _soundIntervalTimeinSec),
+                          builder: (context) =>
+                              RoundTimer(roundSeconds: _roundLengthInSec),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,

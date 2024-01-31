@@ -12,12 +12,18 @@ class RoundTimer extends StatefulWidget {
 class _RoundTimerState extends State<RoundTimer> {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      widget.roundSeconds.toString(),
-      style: const TextStyle(
-        fontSize: 100,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Round Time: ${widget.roundSeconds}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
       ),
     );
   }
