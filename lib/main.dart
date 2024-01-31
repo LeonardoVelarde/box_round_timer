@@ -161,24 +161,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          // builder: (context) => RoundTimer(roundSeconds: _roundLengthInSec, roundCounter: _roundCounter, restSeconds: _restTimeinSec, preparationSeconds: _preparationTimeinSec, soundIntervalSeconds: _soundIntervalTimeinSec),
-                          builder: (context) =>
-                              RoundTimer(roundSeconds: _roundLengthInSec),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        elevation: 12.0,
-                        textStyle: const TextStyle(color: Colors.white)),
-                    child: const Text(
-                      'Start',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            // builder: (context) => RoundTimer(roundSeconds: _roundLengthInSec, roundCounter: _roundCounter, restSeconds: _restTimeinSec, preparationSeconds: _preparationTimeinSec, soundIntervalSeconds: _soundIntervalTimeinSec),
+                            builder: (context) =>
+                                RoundTimer(roundSeconds: _roundLengthInSec),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          elevation: 12.0,
+                          textStyle: const TextStyle(color: Colors.white)),
+                      child: const Text(
+                        'Start',
+                        style: TextStyle(color: Colors.white),
+                      ))
                 ],
               ),
               const Spacer(),
