@@ -11,6 +11,7 @@ class TimerInput extends StatefulWidget {
   final IconData icon;
 
   const TimerInput({
+    super.key,
     required this.valueInSeconds,
     required this.onValueChanged,
     required this.label,
@@ -25,7 +26,6 @@ class TimerInput extends StatefulWidget {
 
 class _TimerInputState extends State<TimerInput> {
   int _roundLengthInSec = 0;
-  int _roundCounter = 1;
 
   void _changeRoundTimerValue(int seconds) {
     if (_roundLengthInSec + seconds < 0) return;
@@ -33,12 +33,6 @@ class _TimerInputState extends State<TimerInput> {
       _roundLengthInSec += seconds;
     });
     widget.onValueChanged(_roundLengthInSec);
-  }
-
-  void _increaseRoundCounter() {
-    setState(() {
-      _roundCounter++;
-    });
   }
 
   @override
@@ -54,7 +48,7 @@ class _TimerInputState extends State<TimerInput> {
         const Spacer(),
         Column(
           children: [
-            Text('${TimerFormatter.format(_roundLengthInSec)}',
+            Text('${TimerFormatter.formatFromSeconds(_roundLengthInSec)}',
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 60)),
             Text(widget.label),
