@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/timer_formatter.dart';
+
 class TimerInput extends StatefulWidget {
   final int valueInSeconds;
   final void Function(int) onValueChanged;
@@ -23,6 +25,7 @@ class TimerInput extends StatefulWidget {
 
 class _TimerInputState extends State<TimerInput> {
   int _roundLengthInSec = 0;
+  int _roundCounter = 1;
 
   void _changeRoundTimerValue(int seconds) {
     if (_roundLengthInSec + seconds < 0) return;
@@ -32,13 +35,10 @@ class _TimerInputState extends State<TimerInput> {
     widget.onValueChanged(_roundLengthInSec);
   }
 
-  String _getFormattedMinutesFromSeconds(int seconds) {
-    if (seconds < 60) return '00';
-    return (seconds / 60).floor().toString().padLeft(2, '0');
-  }
-
-  String _getFormattedSecondsFromSeconds(int seconds) {
-    return (seconds % 60).toString().padLeft(2, '0');
+  void _increaseRoundCounter() {
+    setState(() {
+      _roundCounter++;
+    });
   }
 
   @override
@@ -54,8 +54,7 @@ class _TimerInputState extends State<TimerInput> {
         const Spacer(),
         Column(
           children: [
-            Text(
-                '${_getFormattedMinutesFromSeconds(_roundLengthInSec)}:${_getFormattedSecondsFromSeconds(_roundLengthInSec)}',
+            Text('${TimerFormatter.format(_roundLengthInSec)}',
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 60)),
             Text(widget.label),

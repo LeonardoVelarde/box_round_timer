@@ -35,17 +35,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _roundLengthInSec = 90;
-  int _roundCounter = 3;
+  int _roundCount = 3;
   int _restTimeinSec = 30;
   int _preparationTimeinSec = 0;
   int _soundIntervalTimeinSec = 10;
 
   void _changeRoundCounter(int value) {
-    if (_roundCounter + value <= 0) {
+    if (_roundCount + value <= 0) {
       return;
     }
     setState(() {
-      _roundCounter += value;
+      _roundCount += value;
     });
   }
 
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Column(
                     children: [
-                      Text('$_roundCounter',
+                      Text('$_roundCount',
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 60)),
                       const Text('Rounds'),
@@ -164,9 +164,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            // builder: (context) => RoundTimer(roundSeconds: _roundLengthInSec, roundCounter: _roundCounter, restSeconds: _restTimeinSec, preparationSeconds: _preparationTimeinSec, soundIntervalSeconds: _soundIntervalTimeinSec),
-                            builder: (context) =>
-                                RoundTimer(roundSeconds: _roundLengthInSec),
+                            builder: (context) => RoundTimer(
+                                roundSeconds: _roundLengthInSec,
+                                roundCount: _roundCount,
+                                restSeconds: _restTimeinSec,
+                                preparationSeconds: _preparationTimeinSec,
+                                soundIntervalSeconds: _soundIntervalTimeinSec),
                           ),
                         );
                       },
