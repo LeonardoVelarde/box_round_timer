@@ -9,6 +9,7 @@ class TimerInput extends StatefulWidget {
   final String increaseValueTooltip;
   final String decreaseValueTooltip;
   final IconData icon;
+  final int delta;
 
   const TimerInput({
     super.key,
@@ -18,6 +19,7 @@ class TimerInput extends StatefulWidget {
     required this.increaseValueTooltip,
     required this.decreaseValueTooltip,
     required this.icon,
+    this.delta = 5,
   });
 
   @override
@@ -48,7 +50,7 @@ class _TimerInputState extends State<TimerInput> {
         const Spacer(),
         Column(
           children: [
-            Text('${TimerFormatter.formatFromSeconds(_roundLengthInSec)}',
+            Text(TimerFormatter.formatFromSeconds(_roundLengthInSec),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 60)),
             Text(widget.label),
@@ -59,7 +61,7 @@ class _TimerInputState extends State<TimerInput> {
           icon: const Icon(Icons.add),
           tooltip: widget.increaseValueTooltip,
           onPressed: () {
-            _changeRoundTimerValue(10);
+            _changeRoundTimerValue(widget.delta);
           },
         ),
         const Spacer(),
@@ -67,7 +69,7 @@ class _TimerInputState extends State<TimerInput> {
           icon: const Icon(Icons.remove),
           tooltip: widget.decreaseValueTooltip,
           onPressed: () {
-            _changeRoundTimerValue(-10);
+            _changeRoundTimerValue(-widget.delta);
           },
         ),
         const Spacer(),

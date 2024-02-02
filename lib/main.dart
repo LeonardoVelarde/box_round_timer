@@ -34,10 +34,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _roundLengthInSec = 90;
+  int _roundLengthInSec = 1;
   int _roundCount = 3;
-  int _restTimeinSec = 30;
-  int _preparationTimeinSec = 0;
+  int _restTimeinSec = 1;
+  int _preparationTimeinSec = 1;
   int _soundIntervalTimeinSec = 10;
 
   void _changeRoundCounter(int value) {
@@ -65,21 +65,22 @@ class _MyHomePageState extends State<MyHomePage> {
               TimerInput(
                 valueInSeconds: _roundLengthInSec,
                 label: 'Round Length',
-                increaseValueTooltip: 'Aumentar tiempo por 10s',
-                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                increaseValueTooltip: 'Aumentar tiempo por 15s',
+                decreaseValueTooltip: 'Reducir tiempo por 15s',
                 icon: Icons.timer_outlined,
                 onValueChanged: (value) {
                   setState(() {
                     _roundLengthInSec = value;
                   });
                 },
+                delta: 15,
               ),
               const SizedBox(height: 10),
               TimerInput(
                 valueInSeconds: _restTimeinSec,
                 label: 'Rest time',
-                increaseValueTooltip: 'Aumentar tiempo por 10s',
-                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                increaseValueTooltip: 'Aumentar tiempo por 5s',
+                decreaseValueTooltip: 'Reducir tiempo por 5s',
                 icon: Icons.snooze,
                 onValueChanged: (value) {
                   setState(() {
@@ -91,8 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TimerInput(
                 valueInSeconds: _preparationTimeinSec,
                 label: 'Preparation time',
-                increaseValueTooltip: 'Aumentar tiempo por 10s',
-                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                increaseValueTooltip: 'Aumentar tiempo por 5s',
+                decreaseValueTooltip: 'Reducir tiempo por 5s',
                 icon: Icons.tune,
                 onValueChanged: (value) {
                   setState(() {
@@ -104,8 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
               TimerInput(
                 valueInSeconds: _soundIntervalTimeinSec,
                 label: 'Secondary Bell',
-                increaseValueTooltip: 'Aumentar tiempo por 10s',
-                decreaseValueTooltip: 'Reducir tiempo por 10s',
+                increaseValueTooltip: 'Aumentar tiempo por 5s',
+                decreaseValueTooltip: 'Reducir tiempo por 5s',
                 icon: Icons.hearing,
                 onValueChanged: (value) {
                   setState(() {
