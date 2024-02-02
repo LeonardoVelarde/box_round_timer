@@ -34,11 +34,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _roundLengthInSec = 1;
-  int _roundCount = 3;
-  int _restTimeinSec = 1;
-  int _preparationTimeinSec = 1;
+  int _preparationTimeinSec = 5;
+  int _roundLengthInSec = 15;
+  int _restTimeinSec = 10;
   int _soundIntervalTimeinSec = 10;
+  int _roundCount = 3;
 
   void _changeRoundCounter(int value) {
     if (_roundCount + value <= 0) {

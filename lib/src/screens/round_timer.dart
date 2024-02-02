@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:boxing_round_timer/src/utils/timer_formatter.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -39,7 +40,10 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
   int _secondaryBellIntervalInMillies = 0; // TODO: Implement secondary bell sounds
   int _currentTimerMillies = 0;
   int _currentCounterState = PREPARATION_STATE;
+  bool _isPlayingStarterBell = false;
+  bool _isPlayingRegularBell = false;
   late final Ticker _ticker;
+  final _player = AudioPlayer();
 
   void _startTimer() {
     _ticker.start();
@@ -57,6 +61,11 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
           _currentCounterState = ROUND_STATE;
           _currentTimerMillies = _roundLengthInMillies;
           _ticker.start();
+        }
+        if (_currentTimerMillies < 3000 && !_isPlayingStarterBell) {
+          _isPlayingStarterBell = true;
+          debugPrint("bout to play that banger: starter_bell");
+          _player.play(AssetSource('ear_stuff/starter_bell.wav'));
         }
       });
   }
@@ -82,6 +91,11 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
         _currentTimerMillies = _restLengthInMillies - elapsed.inMilliseconds;
         if (_currentTimerMillies <= 0) {
           _ticker.stop();
+          if (!_isPlayingRegularBell) {
+            _isPlayingRegularBell = true;
+            debugPrint("bout to play that banger: regular_bell");
+            _player.play(AssetSource('ear_stuff/regular_bell.wav'));
+          }
           _currentCounterState = ROUND_STATE;
           _currentTimerMillies = _roundLengthInMillies;
           _ticker.start();
@@ -131,12 +145,17 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
     _currentTimerMillies = _prepLengthInMillies;
     _currentCounterState = PREPARATION_STATE;
     _ticker = createTicker(_handleTick);
+    _player.onPlayerComplete.listen((_){
+      if (_isPlayingRegularBell) { _isPlayingRegularBell = false; }
+      else if (_isPlayingStarterBell) { _isPlayingStarterBell = false; }
+    });
     _ticker.start();
   }
 
   @override
   void dispose() {
     _ticker.dispose();
+    _player.dispose();
     super.dispose();
   }
 
