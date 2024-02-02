@@ -67,12 +67,11 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
         if (_currentTimerMillies <= 0) {
           _ticker.stop();
           if (_roundCounter == widget.roundCount) {
+            _currentCounterState = FINISHED_STATE;
+          } else {
             _currentCounterState = REST_STATE;
             _currentTimerMillies = _restLengthInMillies;
             _ticker.start();
-          } else {
-            _currentCounterState = FINISHED_STATE;
-            _ticker.stop();
           }
         }
       });
@@ -85,8 +84,8 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
           _ticker.stop();
           _currentCounterState = ROUND_STATE;
           _currentTimerMillies = _roundLengthInMillies;
-          _roundCounter++;
           _ticker.start();
+          _roundCounter++;
         }
       });
   }
@@ -153,11 +152,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Round $_roundCounter',
-              style: const TextStyle(color: Colors.white, fontSize: 30),
-            ),
-            Text(
-              'of ${widget.roundCount}',
+              'Round $_roundCounter of ${widget.roundCount}',
               style: const TextStyle(color: Colors.white, fontSize: 30),
             ),
             const Spacer(),
