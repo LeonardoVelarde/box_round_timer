@@ -53,6 +53,16 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
     _ticker.stop();
   }
 
+  void _resetTimer() {
+    _ticker.stop();
+    setState(() {
+      _roundCounter = 1;
+      _currentCounterState = PREPARATION_STATE;
+      _currentTimerMillies = _prepLengthInMillies;
+    });
+    _ticker.start();
+  }
+
   void _preparationStateTick(Duration elapsed) {
       setState(() {
         _currentTimerMillies = _prepLengthInMillies - elapsed.inMilliseconds;
@@ -64,7 +74,6 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
         }
         if (_currentTimerMillies < 3000 && !_isPlayingStarterBell) {
           _isPlayingStarterBell = true;
-          debugPrint("bout to play that banger: starter_bell");
           _player.play(AssetSource('ear_stuff/starter_bell.wav'));
         }
       });
@@ -75,6 +84,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
         _currentTimerMillies = _roundLengthInMillies - elapsed.inMilliseconds;
         if (_currentTimerMillies <= 0) {
           _ticker.stop();
+          _player.play(AssetSource('ear_stuff/regular_bell.wav'));
           if (_roundCounter == widget.roundCount) {
             _currentCounterState = FINISHED_STATE;
           } else {
@@ -93,7 +103,6 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
           _ticker.stop();
           if (!_isPlayingRegularBell) {
             _isPlayingRegularBell = true;
-            debugPrint("bout to play that banger: regular_bell");
             _player.play(AssetSource('ear_stuff/regular_bell.wav'));
           }
           _currentCounterState = ROUND_STATE;
@@ -147,7 +156,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
     _ticker = createTicker(_handleTick);
     _player.onPlayerComplete.listen((_){
       if (_isPlayingRegularBell) { _isPlayingRegularBell = false; }
-      else if (_isPlayingStarterBell) { _isPlayingStarterBell = false; }
+      if (_isPlayingStarterBell) { _isPlayingStarterBell = false; }
     });
     _ticker.start();
   }
@@ -195,6 +204,8 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
                     onPressed: _stopTimer, child: const Text('Pause')),
                 ElevatedButton(
                     onPressed: _startTimer, child: const Text('Resume')),
+                ElevatedButton(
+                    onPressed: _resetTimer, child: const Text('Reset')),
               ],
             )
           ],

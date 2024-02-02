@@ -1,4 +1,5 @@
 class TimerFormatter {
+  
   static String formatFromSeconds(int seconds) {
     if (seconds < 0) return '00:00';
     return '${_getFormattedMinutesFromSeconds(seconds)}:${_getFormattedSecondsFromSeconds(seconds)}';
