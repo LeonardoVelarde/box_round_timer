@@ -60,7 +60,6 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
       _currentCounterState = PREPARATION_STATE;
       _currentTimerMillies = _prepLengthInMillies;
     });
-    _ticker.start();
   }
 
   void _preparationStateTick(Duration elapsed) {
@@ -201,11 +200,17 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: _stopTimer, child: const Text('Pause')),
+                    onPressed: _stopTimer, 
+                    child: const Text('Pause')
+                ),
                 ElevatedButton(
-                    onPressed: _startTimer, child: const Text('Resume')),
+                    onPressed: _startTimer,
+                    child: const Text('Resume')
+                ),
                 ElevatedButton(
-                    onPressed: _resetTimer, child: const Text('Reset')),
+                    onPressed: _resetTimer, 
+                    child: const Text('Reset')
+                ),
               ],
             )
           ],
