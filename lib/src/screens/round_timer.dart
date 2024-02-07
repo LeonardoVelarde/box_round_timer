@@ -42,6 +42,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
   int _currentCounterState = PREPARATION_STATE;
   bool _isPlayingStarterBell = false;
   bool _isPlayingRegularBell = false;
+  Color _backgroundColor = Colors.greenAccent;
   late final Ticker _ticker;
   final _player = AudioPlayer();
 
@@ -86,6 +87,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
           _player.play(AssetSource('ear_stuff/regular_bell.wav'));
           if (_roundCounter == widget.roundCount) {
             _currentCounterState = FINISHED_STATE;
+            _backgroundColor = Colors.grey;
           } else {
             _currentCounterState = REST_STATE;
             _currentTimerMillies = _restLengthInMillies;
@@ -199,20 +201,36 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                    onPressed: _stopTimer, 
-                    child: const Text('Pause')
+                SizedBox(
+                  child: IconButton(
+                    onPressed: _stopTimer,
+                    icon: const Icon(Icons.motion_photos_pause_outlined, size: 60.0),
+                    style: ButtonStyle(
+                      iconColor: MaterialStateProperty.all(Colors.white),
+                    )
+                  ),
                 ),
-                ElevatedButton(
+                SizedBox(
+                  child: IconButton(
                     onPressed: _startTimer,
-                    child: const Text('Resume')
+                    icon: const Icon(Icons.play_circle_outlined, size: 60.0),
+                    style: ButtonStyle(
+                      iconColor: MaterialStateProperty.all(Colors.white),
+                    )
+                  ),
                 ),
-                ElevatedButton(
-                    onPressed: _resetTimer, 
-                    child: const Text('Reset')
+                SizedBox(
+                  child: IconButton(
+                    onPressed: _resetTimer,
+                    icon: const Icon(Icons.replay, size: 60.0),
+                    style: ButtonStyle(
+                      iconColor: MaterialStateProperty.all(Colors.white),
+                    )
+                  ),
                 ),
               ],
-            )
+            ),
+            const Spacer(),
           ],
         ),
       ),
