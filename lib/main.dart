@@ -35,8 +35,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _preparationTimeinSec = 5;
-  int _roundLengthInSec = 15;
-  int _restTimeinSec = 10;
+  int _roundLengthInSec = 5;
+  int _restTimeinSec = 5;
   int _soundIntervalTimeinSec = 10;
   int _roundCount = 3;
 
@@ -53,21 +53,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Boxing Round Timer'),
-        backgroundColor: const Color.fromARGB(255, 253, 250, 230),
+        title: const Center( child: Text('Boxing Round Timer', style: TextStyle(color: Colors.white))),
+        backgroundColor: Colors.black,
       ),
+      backgroundColor: Colors.black,
       body: Center(
         child: Align(
           alignment: Alignment.topCenter,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              const Spacer(),
               TimerInput(
                 valueInSeconds: _roundLengthInSec,
                 label: 'Round Length',
                 increaseValueTooltip: 'Aumentar tiempo por 15s',
                 decreaseValueTooltip: 'Reducir tiempo por 15s',
-                icon: Icons.timer_outlined,
+                iconLabel: Icons.timer_outlined,
                 onValueChanged: (value) {
                   setState(() {
                     _roundLengthInSec = value;
@@ -81,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: 'Rest time',
                 increaseValueTooltip: 'Aumentar tiempo por 5s',
                 decreaseValueTooltip: 'Reducir tiempo por 5s',
-                icon: Icons.snooze,
+                iconLabel: Icons.snooze,
                 onValueChanged: (value) {
                   setState(() {
                     _restTimeinSec = value;
@@ -94,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: 'Preparation time',
                 increaseValueTooltip: 'Aumentar tiempo por 5s',
                 decreaseValueTooltip: 'Reducir tiempo por 5s',
-                icon: Icons.tune,
+                iconLabel: Icons.thumb_up,
                 onValueChanged: (value) {
                   setState(() {
                     _preparationTimeinSec = value;
@@ -107,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: 'Secondary Bell',
                 increaseValueTooltip: 'Aumentar tiempo por 5s',
                 decreaseValueTooltip: 'Reducir tiempo por 5s',
-                icon: Icons.hearing,
+                iconLabel: Icons.hearing,
                 onValueChanged: (value) {
                   setState(() {
                     _soundIntervalTimeinSec = value;
@@ -124,15 +126,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text('$_roundCount',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 60)),
-                      const Text('Rounds'),
+                          style: const TextStyle(fontSize: 60, color: Colors.white)),
+                      const Text('Rounds', style: TextStyle(color: Colors.white)),
                     ],
                   ),
                   const Spacer(
                     flex: 3,
                   ),
                   IconButton(
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Icons.add, color: Color.fromARGB(255, 25, 118, 210)),
                     tooltip: 'Aumentar una ronda',
                     onPressed: () {
                       _changeRoundCounter(1);
@@ -140,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.remove),
+                    icon: const Icon(Icons.remove, color: Color.fromARGB(255, 213, 0, 0)),
                     tooltip: 'Reducir una ronda',
                     onPressed: () {
                       _changeRoundCounter(-1);
@@ -150,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Text.rich(
                     TextSpan(
                       children: [
-                        WidgetSpan(child: Icon(Icons.doorbell_outlined)),
+                        WidgetSpan(child: Icon(Icons.doorbell_outlined, color: Color.fromARGB(255, 238, 238, 238),)),
                       ],
                     ),
                   ),
@@ -158,31 +160,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               const Spacer(),
-              ButtonBar(
-                alignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => RoundTimer(
-                                roundSeconds: _roundLengthInSec,
-                                roundCount: _roundCount,
-                                restSeconds: _restTimeinSec,
-                                preparationSeconds: _preparationTimeinSec,
-                                soundIntervalSeconds: _soundIntervalTimeinSec),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          elevation: 12.0,
-                          textStyle: const TextStyle(color: Colors.white)),
-                      child: const Text(
-                        'Start',
-                        style: TextStyle(color: Colors.white),
-                      ))
-                ],
+              Center(
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => RoundTimer(
+                              roundSeconds: _roundLengthInSec,
+                              roundCount: _roundCount,
+                              restSeconds: _restTimeinSec,
+                              preparationSeconds: _preparationTimeinSec,
+                              soundIntervalSeconds: _soundIntervalTimeinSec),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        elevation: 12.0,
+                        textStyle: const TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Start',
+                      style: TextStyle(color: Colors.white),
+                    )),
               ),
               const Spacer(),
             ],

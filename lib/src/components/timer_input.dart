@@ -8,7 +8,7 @@ class TimerInput extends StatefulWidget {
   final String label;
   final String increaseValueTooltip;
   final String decreaseValueTooltip;
-  final IconData icon;
+  final IconData iconLabel;
   final int delta;
 
   const TimerInput({
@@ -18,7 +18,7 @@ class TimerInput extends StatefulWidget {
     required this.label,
     required this.increaseValueTooltip,
     required this.decreaseValueTooltip,
-    required this.icon,
+    required this.iconLabel,
     this.delta = 5,
   });
 
@@ -52,13 +52,13 @@ class _TimerInputState extends State<TimerInput> {
           children: [
             Text(TimerFormatter.formatFromSeconds(_roundLengthInSec),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 60)),
-            Text(widget.label),
+                style: const TextStyle(fontSize: 60, color: Colors.white)),
+            Text(widget.label, style: const TextStyle(color: Colors.white)),
           ],
         ),
         const Spacer(),
         IconButton(
-          icon: const Icon(Icons.add),
+          icon: const Icon(Icons.add, color: Color.fromARGB(255, 25, 118, 210), size: 40),
           tooltip: widget.increaseValueTooltip,
           onPressed: () {
             _changeRoundTimerValue(widget.delta);
@@ -66,7 +66,7 @@ class _TimerInputState extends State<TimerInput> {
         ),
         const Spacer(),
         IconButton(
-          icon: const Icon(Icons.remove),
+          icon: const Icon(Icons.remove, color: Color.fromARGB(255, 213, 0, 0), size: 40),
           tooltip: widget.decreaseValueTooltip,
           onPressed: () {
             _changeRoundTimerValue(-widget.delta);
@@ -76,7 +76,7 @@ class _TimerInputState extends State<TimerInput> {
         Text.rich(
           TextSpan(
             children: [
-              WidgetSpan(child: Icon(widget.icon)),
+              WidgetSpan(child: Icon(widget.iconLabel, color: const Color.fromARGB(255, 238, 238, 238), size: 35)),
             ],
           ),
         ),

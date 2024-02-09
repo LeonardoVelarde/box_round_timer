@@ -65,6 +65,15 @@ flutter:
     - assets/ear_stuff/starter_bell.wav
     - assets/ear_stuff/regular_bell.wav
     - assets/ear_stuff/secondary_bell.wav
+    - assets/ear_stuff/round_01.mp3
+    - assets/ear_stuff/round_02.mp3
+    - assets/ear_stuff/round_03.mp3
+    - assets/ear_stuff/round_04.mp3
+    - assets/ear_stuff/round_05.mp3
+    - assets/ear_stuff/round_06.mp3
+    - assets/ear_stuff/round_07.mp3
+    - assets/ear_stuff/round_08.mp3
+    - assets/ear_stuff/round_09.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

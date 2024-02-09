@@ -40,6 +40,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
   int _secondaryBellIntervalInMillies = 0; // TODO: Implement secondary bell sounds
   int _currentTimerMillies = 0;
   int _currentCounterState = PREPARATION_STATE;
+  bool _timerIsTicking = false;
   bool _isPlayingStarterBell = false;
   bool _isPlayingRegularBell = false;
   Color _backgroundColor = Colors.greenAccent;
@@ -47,19 +48,28 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
   final _player = AudioPlayer();
 
   void _startTimer() {
+    if (_timerIsTicking) { return; }
     _ticker.start();
+    setState(() {
+      _timerIsTicking = true;
+    });
   }
 
   void _stopTimer() {
+    if (!_timerIsTicking) { return; }
     _ticker.stop();
+    setState(() {
+      _timerIsTicking = false;
+    });
   }
 
   void _resetTimer() {
-    _ticker.stop();
+    _stopTimer();
     setState(() {
       _roundCounter = 1;
       _currentCounterState = PREPARATION_STATE;
       _currentTimerMillies = _prepLengthInMillies;
+      _backgroundColor = Colors.greenAccent;
     });
   }
 
@@ -67,14 +77,14 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
       setState(() {
         _currentTimerMillies = _prepLengthInMillies - elapsed.inMilliseconds;
         if (_currentTimerMillies <= 0) {
-          _ticker.stop();
+          _stopTimer();
           _currentCounterState = ROUND_STATE;
           _currentTimerMillies = _roundLengthInMillies;
-          _ticker.start();
+          _startTimer();
         }
         if (_currentTimerMillies < 3000 && !_isPlayingStarterBell) {
           _isPlayingStarterBell = true;
-          _player.play(AssetSource('ear_stuff/starter_bell.wav'));
+          _player.play(AssetSource('ear_stuff/round_01.mp3'));
         }
       });
   }
@@ -83,7 +93,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
       setState(() {
         _currentTimerMillies = _roundLengthInMillies - elapsed.inMilliseconds;
         if (_currentTimerMillies <= 0) {
-          _ticker.stop();
+          _stopTimer();
           _player.play(AssetSource('ear_stuff/regular_bell.wav'));
           if (_roundCounter == widget.roundCount) {
             _currentCounterState = FINISHED_STATE;
@@ -91,7 +101,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
           } else {
             _currentCounterState = REST_STATE;
             _currentTimerMillies = _restLengthInMillies;
-            _ticker.start();
+            _startTimer();
           }
         }
       });
@@ -100,16 +110,21 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
   void _restStateTick(Duration elapsed) {
       setState(() {
         _currentTimerMillies = _restLengthInMillies - elapsed.inMilliseconds;
+        if (_currentTimerMillies <= 2500 && !_isPlayingRegularBell) {
+          _isPlayingRegularBell = true;
+          if (_roundCounter + 1 <= 9){
+            _player.play(AssetSource('ear_stuff/round_0${_roundCounter + 1}.mp3'));
+          }
+        }
         if (_currentTimerMillies <= 0) {
-          _ticker.stop();
+          _stopTimer();
+          _roundCounter++;
           if (!_isPlayingRegularBell) {
-            _isPlayingRegularBell = true;
             _player.play(AssetSource('ear_stuff/regular_bell.wav'));
           }
           _currentCounterState = ROUND_STATE;
           _currentTimerMillies = _roundLengthInMillies;
-          _ticker.start();
-          _roundCounter++;
+          _startTimer();
         }
       });
   }
@@ -159,7 +174,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
       if (_isPlayingRegularBell) { _isPlayingRegularBell = false; }
       if (_isPlayingStarterBell) { _isPlayingStarterBell = false; }
     });
-    _ticker.start();
+    _startTimer();
   }
 
   @override
@@ -172,9 +187,9 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: _backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: _backgroundColor,
       ),
       body: Center(
         child: Column(
@@ -202,19 +217,10 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
-                  child: IconButton(
-                    onPressed: _stopTimer,
-                    icon: const Icon(Icons.motion_photos_pause_outlined, size: 60.0),
-                    style: ButtonStyle(
-                      iconColor: MaterialStateProperty.all(Colors.white),
-                    )
-                  ),
-                ),
-                SizedBox(
-                  child: IconButton(
-                    onPressed: _startTimer,
-                    icon: const Icon(Icons.play_circle_outlined, size: 60.0),
-                    style: ButtonStyle(
+                    child: IconButton(
+                      onPressed: _timerIsTicking ? _stopTimer : _startTimer,
+                      icon: _timerIsTicking ? const Icon(Icons.motion_photos_pause_outlined, size: 60.0) : const Icon(Icons.play_circle_outlined, size: 60.0),
+                      style: ButtonStyle(
                       iconColor: MaterialStateProperty.all(Colors.white),
                     )
                   ),
