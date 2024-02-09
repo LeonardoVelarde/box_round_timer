@@ -57,13 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Center(
         child: Align(
           alignment: Alignment.topCenter,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Spacer(),
+              const SizedBox(height: 10),
               TimerInput(
                 valueInSeconds: _roundLengthInSec,
                 label: 'Round Length',
@@ -160,8 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               const Spacer(),
-              Center(
-                child: ElevatedButton(
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -173,20 +176,31 @@ class _MyHomePageState extends State<MyHomePage> {
                               soundIntervalSeconds: _soundIntervalTimeinSec),
                         ),
                       );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                      },
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        side: const BorderSide(
+                          width: 2.0,
+                          color: Colors.greenAccent,
+                        ),
                         elevation: 12.0,
-                        textStyle: const TextStyle(color: Colors.white)),
-                    child: const Text(
-                      'Start',
-                      style: TextStyle(color: Colors.white),
+                        textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Text( 'START', style: TextStyle(fontSize: 25.0, color: Colors.white))
                     )),
-              ),
+                ),
               const Spacer(),
             ],
           ),
         ),
+      ),
       ),
     );
   }
