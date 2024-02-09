@@ -112,7 +112,10 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
         _currentTimerMillies = _restLengthInMillies - elapsed.inMilliseconds;
         if (_currentTimerMillies <= 2500 && !_isPlayingRegularBell) {
           _isPlayingRegularBell = true;
-          if (_roundCounter + 1 <= 9){
+          if (_roundCounter + 1 == widget.roundCount){
+            _player.play(AssetSource('ear_stuff/final_round.mp3'));
+          }
+          else if (_roundCounter + 1 <= 9) {
             _player.play(AssetSource('ear_stuff/round_0${_roundCounter + 1}.mp3'));
           }
         }
@@ -196,7 +199,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Round $_roundCounter of ${widget.roundCount}',
+              'Round $_roundCounter/${widget.roundCount}',
               style: const TextStyle(color: Colors.white, fontSize: 30),
             ),
             const Spacer(),
@@ -210,7 +213,7 @@ class _RoundTimerState extends State<RoundTimer> with SingleTickerProviderStateM
             const Spacer(),
             Text(
               _getCurrentStateText(),
-              style: const TextStyle(color: Colors.white, fontSize: 30),
+              style: const TextStyle(color: Colors.white, fontSize: 45),
             ),
             const Spacer(),
             Row(

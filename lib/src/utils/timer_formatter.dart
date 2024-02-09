@@ -1,4 +1,8 @@
+
+
 class TimerFormatter {
+
+  TimerFormatter._();
   
   static String formatFromSeconds(int seconds) {
     if (seconds < 0) return '00:00';

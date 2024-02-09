@@ -2,8 +2,9 @@
 import 'dart:developer' as developer;
 
 import 'package:boxing_round_timer/src/screens/round_timer.dart';
+import 'package:boxing_round_timer/src/utils/box_timer_theme.dart';
 import 'package:flutter/material.dart';
-import 'src/components/timer_input.dart';
+import 'src/widgets/timer_input.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,10 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center( child: Text('Boxing Round Timer', style: TextStyle(color: Colors.white))),
-        backgroundColor: Colors.black,
+        title: const Center( child: Text('Box Timer', style: TextStyle(color: TimerSettingsScreenTheme.textColor))),
+        backgroundColor: TimerSettingsScreenTheme.backgroundColor,
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: TimerSettingsScreenTheme.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Center(
@@ -128,8 +129,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text('$_roundCount',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 60, color: Colors.white)),
-                      const Text('Rounds', style: TextStyle(color: Colors.white)),
+                          style: const TextStyle(fontSize: 60, color: TimerSettingsScreenTheme.textColor)),
+                      const Text('Rounds', style: TextStyle(color: TimerSettingsScreenTheme.textColor)),
                     ],
                   ),
                   const Spacer(
@@ -183,17 +184,17 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         side: const BorderSide(
                           width: 2.0,
-                          color: Colors.greenAccent,
+                          color: TimerSettingsScreenTheme.startButtonOutlineColor,
                         ),
                         elevation: 12.0,
                         textStyle: const TextStyle(
-                            color: Colors.white,
+                            color: TimerSettingsScreenTheme.textColor,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold),
                       ),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: Text( 'START', style: TextStyle(fontSize: 25.0, color: Colors.white))
+                        child: Text( 'START', style: TextStyle(fontSize: 25.0, color: TimerSettingsScreenTheme.textColor))
                     )),
                 ),
               const Spacer(),
