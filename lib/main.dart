@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'dart:developer' as developer;
-
 import 'package:boxing_round_timer/src/screens/round_timer.dart';
 import 'package:boxing_round_timer/src/utils/box_timer_theme.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     flex: 3,
                   ),
                   IconButton(
-                    icon: const Icon(Icons.add, color: Color.fromARGB(255, 25, 118, 210)),
+                    icon: const Icon(Icons.add, color: Color.fromARGB(255, 250, 100, 40)),
                     tooltip: 'Aumentar una ronda',
                     onPressed: () {
                       _changeRoundCounter(1);
@@ -145,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.remove, color: Color.fromARGB(255, 213, 0, 0)),
+                    icon: const Icon(Icons.remove, color: Color.fromARGB(255, 184, 0, 153)),
                     tooltip: 'Reducir una ronda',
                     onPressed: () {
                       _changeRoundCounter(-1);
@@ -194,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.0),
-                        child: Text( 'START', style: TextStyle(fontSize: 25.0, color: TimerSettingsScreenTheme.textColor))
+                        child: Text( 'START', style: TextStyle(fontSize: 24.0, color: TimerSettingsScreenTheme.textColor))
                     )),
                 ),
               const Spacer(),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:boxing_round_timer/src/utils/box_timer_theme.dart';
 import '../utils/timer_formatter.dart';
 
 class TimerInput extends StatefulWidget {
@@ -52,8 +52,8 @@ class _TimerInputState extends State<TimerInput> {
           children: [
             Text(TimerFormatter.formatFromSeconds(_roundLengthInSec),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 60, color: Colors.white)),
-            Text(widget.label, style: const TextStyle(color: Colors.white)),
+                style: const TextStyle(fontSize: 60, color: TimerSettingsScreenTheme.textColor)),
+            Text(widget.label, style: const TextStyle(color: TimerSettingsScreenTheme.textColor)),
           ],
         ),
         const Spacer(),
@@ -76,7 +76,7 @@ class _TimerInputState extends State<TimerInput> {
         Text.rich(
           TextSpan(
             children: [
-              WidgetSpan(child: Icon(widget.iconLabel, color: const Color.fromARGB(255, 238, 238, 238), size: 35)),
+              WidgetSpan(child: Icon(widget.iconLabel, color: const Color.fromARGB(255, 223, 228, 229), size: 35)),
             ],
           ),
         ),
